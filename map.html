@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="http://code.angularjs.org/1.0.8/angular-resource.min.js"></script>
+		<script src="http://js.arcgis.com/3.6/"></script>		
+		<script src="map.js"></script>
+		<link rel="stylesheet" href="http://js.arcgis.com/3.6/js/esri/css/esri.css">
+	</head>
+  <body>
+	
+    <div ng-controller="FirstMapCtrl">
+
+			<map>
+				<layer url="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer"></layer>
+			</map>
+		
+		</div>
+		
+  </body>
+</html>
