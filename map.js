@@ -1,16 +1,13 @@
 ﻿dojo.require("esri.map");
-dojo.addOnLoad(init);
-
-function init() {
+dojo.addOnLoad(function() {
   angular.bootstrap(document, ['mapApp']);
-}
+});
 
 var app = angular.module('mapApp', []);
 
 app.directive('map', function() {
   return {
-    restrict: 'E',
-    scope: true,
+    restrict: 'EA',
     controller: function($scope) {
     
       this.map = {};
@@ -20,8 +17,11 @@ app.directive('map', function() {
       }
       
     },
-    link: function($scope, element, attrs, controller) {
-      controller.map = new esri.Map(element[0]);
+    link: function(scope, element, attrs, controller) {
+      controller.map = new esri.Map(element[0], { zoom:attrs.zoom, center:JSON.parse(attrs.center) });
+      controller.map.on('click', function(event) {
+        console.log(controller.map.extent);
+      });
     }
   }
 });
