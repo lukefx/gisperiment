@@ -1,4 +1,4 @@
 gisperiment
 ===========
 
-Stange experiment with Esri JS API
+Strange experiment with Esri JS API
