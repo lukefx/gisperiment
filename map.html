@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.6/js/esri/css/esri.css">
   </head>
   <body>
-    <div ng-controller="FirstMapCtrl">
-      <map center="[40.000, 4.9500]" zoom="5">
-        <layer url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"></layer>
+    <div>
+      <map center="[8, 46]" zoom="5">
+        <tiled-layer url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"></tiled-layer>
       </map>
     </div>
+
+    <br />
+    
+    <div>
+      <map center="[8, 46]" zoom="6">
+        <tiled-layer url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"></tiled-layer>
+      </map>
+    </div>
+    
   </body>
 </html>

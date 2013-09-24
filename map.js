@@ -7,36 +7,52 @@ var app = angular.module('mapApp', []);
 
 app.directive('map', function() {
   return {
-    restrict: 'EA',
+    restrict: 'E',
     controller: function($scope) {
-    
       this.map = {};
- 
-      this.getMap = function() {
-        return this.map;
-      }
-      
     },
     link: function(scope, element, attrs, controller) {
-      controller.map = new esri.Map(element[0], { zoom:attrs.zoom, center:JSON.parse(attrs.center) });
-      controller.map.on('click', function(event) {
-        console.log(controller.map.extent);
+      
+      var defaults = {
+        center: typeof attrs.center !== 'undefined' ? JSON.parse(attrs.center) : null,
+        zoom: attrs.zoom || null
+      }
+      
+      controller.map = new esri.Map(element[0], defaults);
+      scope.$on('syncMap', function(event, e) {
+        controller.map.setExtent(e.extent);
       });
+      
+      controller.map.on('click', function(event) {
+        scope.$emit('syncMap', { extent: controller.map.extent });
+      });
+      
     }
   }
 });
 
-app.directive('layer', function() {
+app.directive('tiledLayer', function() {
   return {
     restrict: 'E',
     require: '^map',
     scope: false,
     link: function($scope, element, attrs, mapCtrl) {
-    
       $scope.$watch(mapCtrl.map, function() {
-        mapCtrl.getMap().addLayer(new esri.layers.ArcGISTiledMapServiceLayer(attrs.url));
+        mapCtrl.map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(attrs.url));
       })
-      
+    }
+  }
+});
+
+app.directive('dynamicLayer', function() {
+  return {
+    restrict: 'E',
+    require: '^map',
+    scope: false,
+    link: function($scope, element, attrs, mapCtrl) {
+      $scope.$watch(mapCtrl.map, function() {
+        mapCtrl.map.addLayer(new esri.layers.ArcGISDynamicMapServiceLayer(attrs.url));
+      })
     }
   }
 });
